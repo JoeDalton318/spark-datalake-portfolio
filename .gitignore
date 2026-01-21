@@ -1,0 +1,119 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+*.log
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+notebooks/.ipynb_checkpoints/
+notebooks/*/.ipynb_checkpoints/
+
+# IPython
+profile_default/
+ipython_config.py
+
+# Environment
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Docker
+.docker/
+docker-compose.override.yml
+
+# Spark & Hadoop
+spark-warehouse/
+metastore_db/
+derby.log
+*.crc
+
+# Data files (excluding sample data)
+*.csv
+*.parquet
+*.json
+*.avro
+*.orc
+!vol/postgresql/*.sql
+
+# Large output directories
+notebooks/exercices/data/commandes_csv/part-*.csv
+notebooks/exercices/data/employes_csv/part-*.csv
+notebooks/exercices/data/employes_json/part-*.json
+notebooks/exercices/data/employes_parquet/
+notebooks/exercices/data/commandes_parquet/
+
+# MinIO data
+minio-data/
+vol/minio/
+
+# PostgreSQL data
+vol/postgresql/data/
+
+# Kafka data
+kafka-data/
+zookeeper-data/
+
+# Logs
+*.log
+logs/
+vol/logs/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# OS
+Thumbs.db
+.DS_Store
+*.bak
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Notes and personal docs (keep clean for portfolio)
+.notes/
+TODO.md
+NOTES.md
+personal/
+
+# Secrets (NEVER commit credentials)
+*.key
+*.pem
+secrets/
+credentials.json
+
+# Build artifacts
+target/
+*.class
+*.jar
+!lib/*.jar
