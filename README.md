@@ -1,4 +1,4 @@
-# Modern Data Lake Architecture with Spark, Kafka & MinIO
+# Architecture Moderne de Data Lake avec Spark, Kafka & MinIO
 
 ![Apache Spark](https://img.shields.io/badge/Apache%20Spark-4.0.1-E25A1C?style=for-the-badge&logo=apachespark&logoColor=white)
 ![Kafka](https://img.shields.io/badge/Apache%20Kafka-8.0-231F20?style=for-the-badge&logo=apachekafka&logoColor=white)
@@ -8,206 +8,206 @@
 ![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![Jupyter](https://img.shields.io/badge/Jupyter-Lab-F37626?style=for-the-badge&logo=jupyter&logoColor=white)
 
-## Overview
+## Vue d'ensemble
 
-Production-ready Data Lake infrastructure implementing the **Medallion Architecture** (Bronze/Silver/Gold) for modern data engineering workflows. This project demonstrates enterprise-level data processing patterns using industry-standard tools.
+Infrastructure Data Lake prête pour la production implémentant l'**Architecture Medallion** (Bronze/Silver/Gold) pour des workflows modernes d'ingénierie de données. Ce projet démontre des patterns de traitement de données de niveau entreprise utilisant des outils standards de l'industrie.
 
-### Key Features
+### Fonctionnalités clés
 
-- **Medallion Architecture**: Bronze (Raw), Silver (Cleansed), Gold (Aggregated) layers
-- **Real-time Streaming**: Apache Kafka integration with Spark Structured Streaming
-- **Batch Processing**: PySpark for large-scale ETL/ELT operations
-- **Object Storage**: MinIO S3-compatible storage for data lake persistence
-- **Containerized**: Full Docker Compose orchestration for reproducible environments
-- **Analytics-Ready**: Pre-loaded Northwind database for business intelligence scenarios
+- **Architecture Medallion** : Couches Bronze (Brut), Silver (Nettoyé), Gold (Agrégé)
+- **Streaming temps réel** : Intégration Apache Kafka avec Spark Structured Streaming
+- **Traitement batch** : PySpark pour des opérations ETL/ELT à grande échelle
+- **Stockage objet** : MinIO compatible S3 pour la persistance du data lake
+- **Conteneurisé** : Orchestration complète Docker Compose pour des environnements reproductibles
+- **Prêt pour l'analytique** : Base de données Northwind pré-chargée pour des scénarios de Business Intelligence
 
 ## Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    MODERN DATA LAKE ARCHITECTURE                            │
+│                   ARCHITECTURE MODERNE DE DATA LAKE                         │
 └─────────────────────────────────────────────────────────────────────────────┘
 
     ┌──────────────┐        ┌──────────────┐        ┌──────────────┐
     │  PostgreSQL  │        │ Kafka Broker │        │    MinIO     │
-    │   (OLTP)     │        │  (Streaming) │        │ (Data Lake)  │
+    │    (OLTP)    │        │  (Streaming) │        │ (Data Lake)  │
     │    :5433     │        │    :9092     │        │  :9000/:9001 │
     └──────┬───────┘        └──────┬───────┘        └──────┬───────┘
            │                       │                       │
-           │    Ingestion          │   Real-time           │
+           │    Ingestion          │   Temps réel          │
            │                       │                       │
     ┌──────▼───────────────────────▼───────────────────────▼───────┐
-    │                     SPARK PROCESSING LAYER                   │
+    │                   COUCHE DE TRAITEMENT SPARK                 │
     │                          (JupyterLab)                        │
     │  ┌────────────────────────────────────────────────────────┐  │
-    │  │  Bronze Layer  →  Silver Layer  →  Gold Layer          │  │
-    │  │  (Raw Data)      (Cleansed)        (Business KPIs)     │  │
+    │  │  Couche Bronze  →  Couche Silver  →  Couche Gold      │  │
+    │  │  (Données brutes)   (Nettoyées)      (KPIs métier)    │  │
     │  └────────────────────────────────────────────────────────┘  │
     └──────────────────────────────────────────────────────────────┘
 ```
 
-### Data Flow
+### Flux de données
 
-1. **Bronze Layer**: Raw data ingestion from PostgreSQL (JDBC) and Kafka streams
-2. **Silver Layer**: Data cleansing, deduplication, and denormalization (star schema)
-3. **Gold Layer**: Business aggregations, KPIs, and RFM analysis for analytics
+1. **Couche Bronze** : Ingestion de données brutes depuis PostgreSQL (JDBC) et flux Kafka
+2. **Couche Silver** : Nettoyage, déduplication et dénormalisation des données (schéma en étoile)
+3. **Couche Gold** : Agrégations métier, KPIs et analyse RFM pour l'analytique
 
-## Quick Start
+## Démarrage rapide
 
-### Prerequisites
+### Prérequis
 
 - Docker Desktop 20.10+
 - Docker Compose 2.0+
-- 8GB RAM minimum (16GB recommended)
-- 20GB free disk space
+- 8GB RAM minimum (16GB recommandé)
+- 20GB d'espace disque libre
 
-### Launch Environment
+### Lancer l'environnement
 
 ```bash
-# Clone repository
-git clone https://github.com/your-username/spark-datalake-portfolio.git
+# Cloner le dépôt
+git clone https://github.com/JoeDalton318/spark-datalake-portfolio.git
 cd spark-datalake-portfolio
 
-# Start all services
+# Démarrer tous les services
 docker compose up -d
 
-# Verify services are running
+# Vérifier que les services sont actifs
 docker compose ps
 
-# Access JupyterLab
-# Open http://localhost:8888 in your browser
+# Accéder à JupyterLab
+# Ouvrir http://localhost:8888 dans votre navigateur
 ```
 
-### Run the Complete Pipeline
+### Exécuter le pipeline complet
 
-Open the notebook `notebooks/TP_Groupe3_DataLake.ipynb` in JupyterLab and execute all cells sequentially. The pipeline will:
+Ouvrir le notebook `notebooks/TP_Groupe3_DataLake.ipynb` dans JupyterLab et exécuter toutes les cellules séquentiellement. Le pipeline va :
 
-1. Ingest Northwind database tables to Bronze layer (Parquet format)
-2. Apply transformations and create master view in Silver layer
-3. Produce real-time events to Kafka and consume with Spark Streaming
-4. Generate business KPIs and customer segmentation in Gold layer
-5. Display interactive dashboard with matplotlib/seaborn visualizations
+1. Ingérer les tables de la base Northwind vers la couche Bronze (format Parquet)
+2. Appliquer les transformations et créer une vue maître dans la couche Silver
+3. Produire des événements temps réel vers Kafka et les consommer avec Spark Streaming
+4. Générer les KPIs métier et la segmentation client dans la couche Gold
+5. Afficher un dashboard interactif avec des visualisations matplotlib/seaborn
 
-## Services & Access Points
+## Services & Points d'accès
 
-| Service | URL | Credentials | Purpose |
-|---------|-----|-------------|---------|
-| **JupyterLab** | http://localhost:8888 | No token required | Spark development environment |
-| **MinIO Console** | http://localhost:9001 | `minioadmin` / `minioadmin123` | S3 storage management |
-| **Kafka UI** | http://localhost:7080 | - | Stream monitoring & topic management |
-| **Adminer** | http://localhost:9080 | `postgres` / `postgres` | Database client (DB: `app`) |
-| **PostgreSQL** | localhost:5433 | `postgres` / `postgres` | Source database |
-| **Kafka Broker** | localhost:9092 | - | Event streaming |
-| **MinIO API** | localhost:9000 | - | S3-compatible object storage |
+| Service | URL | Identifiants | Usage |
+|---------|-----|--------------|-------|
+| **JupyterLab** | http://localhost:8888 | Pas de token requis | Environnement de développement Spark |
+| **Console MinIO** | http://localhost:9001 | `minioadmin` / `minioadmin123` | Gestion du stockage S3 |
+| **Kafka UI** | http://localhost:7080 | - | Monitoring des flux et gestion des topics |
+| **Adminer** | http://localhost:9080 | `postgres` / `postgres` | Client de base de données (DB: `app`) |
+| **PostgreSQL** | localhost:5433 | `postgres` / `postgres` | Base de données source |
+| **Kafka Broker** | localhost:9092 | - | Streaming d'événements |
+| **MinIO API** | localhost:9000 | - | Stockage objet compatible S3 |
 
-## Project Structure
+## Structure du projet
 
 ```
 spark-datalake-portfolio/
-├── docker-compose.yml              # Infrastructure orchestration
+├── docker-compose.yml              # Orchestration de l'infrastructure
 ├── notebooks/
-│   ├── TP_Groupe3_DataLake.ipynb  # Complete pipeline implementation
-│   ├── exemples/                   # Starter examples
-│   └── exercices/                  # Practice exercises
+│   ├── TP_Groupe3_DataLake.ipynb  # Implémentation complète du pipeline
+│   ├── exemples/                   # Exemples de démarrage
+│   └── exercices/                  # Exercices pratiques
 ├── vol/
-│   ├── jupyter/                    # Jupyter configuration
+│   ├── jupyter/                    # Configuration Jupyter
 │   └── postgresql/
-│       └── northwind.sql           # Sample database schema
-└── README.md                       # This file
+│       └── northwind.sql           # Schéma de la base de données exemple
+└── README.md                       # Ce fichier
 ```
 
-## Technical Stack
+## Stack technique
 
-### Core Technologies
+### Technologies principales
 
-- **Apache Spark 4.0.1**: Distributed data processing engine
-- **PySpark**: Python API for Spark
-- **Apache Kafka 8.0**: Real-time event streaming platform
-- **MinIO**: High-performance S3-compatible object storage
-- **PostgreSQL 18.1**: OLTP source database with Northwind dataset
-- **JupyterLab**: Interactive development environment
+- **Apache Spark 4.0.1** : Moteur de traitement de données distribué
+- **PySpark** : API Python pour Spark
+- **Apache Kafka 8.0** : Plateforme de streaming d'événements temps réel
+- **MinIO** : Stockage objet haute performance compatible S3
+- **PostgreSQL 18.1** : Base de données OLTP source avec dataset Northwind
+- **JupyterLab** : Environnement de développement interactif
 
-### Python Libraries
+### Bibliothèques Python
 
-- **kafka-python**: Kafka producer/consumer clients
-- **pyspark**: Spark SQL, DataFrame, and Streaming APIs
-- **matplotlib/seaborn**: Data visualization
-- **pandas**: Data manipulation and analysis
+- **kafka-python** : Clients producteur/consommateur Kafka
+- **pyspark** : APIs Spark SQL, DataFrame et Streaming
+- **matplotlib/seaborn** : Visualisation de données
+- **pandas** : Manipulation et analyse de données
 
-### Data Processing Features
+### Fonctionnalités de traitement
 
-- JDBC connectivity (PostgreSQL)
-- S3A file system integration (Hadoop AWS)
+- Connectivité JDBC (PostgreSQL)
+- Intégration système de fichiers S3A (Hadoop AWS)
 - Spark Structured Streaming
-- Kafka integration (spark-sql-kafka)
-- Parquet columnar storage format
+- Intégration Kafka (spark-sql-kafka)
+- Format de stockage colonnaire Parquet
 
-## Use Cases Demonstrated
+## Cas d'usage démontrés
 
-### 1. Batch Data Ingestion
-- Full table extraction from OLTP database
-- Metadata tracking (timestamp, source)
-- Partitioned writes to object storage
+### 1. Ingestion de données batch
+- Extraction complète de tables depuis base OLTP
+- Suivi des métadonnées (timestamp, source)
+- Écritures partitionnées vers stockage objet
 
-### 2. Data Transformation & Quality
-- Null handling and data type conversions
-- Denormalization for analytical queries
-- Calculated fields and business logic
+### 2. Transformation & Qualité des données
+- Gestion des valeurs nulles et conversions de types
+- Dénormalisation pour requêtes analytiques
+- Champs calculés et logique métier
 
-### 3. Real-time Stream Processing
-- Kafka producer simulation (Python)
-- Spark Structured Streaming consumer
-- Micro-batch aggregations
-- In-memory query tables
+### 3. Traitement de flux temps réel
+- Simulation de producteur Kafka (Python)
+- Consommateur Spark Structured Streaming
+- Agrégations micro-batch
+- Tables de requêtes en mémoire
 
 ### 4. Business Intelligence
-- Customer segmentation (RFM analysis)
-- Sales performance by region
-- Product category analysis
-- Real-time revenue monitoring
+- Segmentation client (analyse RFM)
+- Performance des ventes par région
+- Analyse par catégorie de produits
+- Monitoring des revenus en temps réel
 
-## Pipeline Implementation Details
+## Détails d'implémentation du pipeline
 
-The main notebook (`TP_Groupe3_DataLake.ipynb`) implements a complete data engineering workflow:
+Le notebook principal (`TP_Groupe3_DataLake.ipynb`) implémente un workflow complet d'ingénierie de données :
 
-### Phase 1: Bronze Layer (Data Ingestion)
-- Reads 6 tables from Northwind database via JDBC
-- Adds technical metadata columns
-- Writes raw Parquet files to MinIO (`s3a://bronze/`)
+### Phase 1 : Couche Bronze (Ingestion de données)
+- Lecture de 6 tables de la base Northwind via JDBC
+- Ajout de colonnes de métadonnées techniques
+- Écriture de fichiers Parquet bruts vers MinIO (`s3a://bronze/`)
 
-### Phase 2: Silver Layer (Data Transformation)
-- Cleans and standardizes data types
-- Calculates derived metrics (line totals, discounts)
-- Creates denormalized master view with 5-table join
-- Stores cleansed data (`s3a://silver/`)
+### Phase 2 : Couche Silver (Transformation de données)
+- Nettoyage et standardisation des types de données
+- Calcul de métriques dérivées (totaux de ligne, remises)
+- Création d'une vue maître dénormalisée avec jointures de 5 tables
+- Stockage des données nettoyées (`s3a://silver/`)
 
-### Phase 3: Streaming Integration
-- Python Kafka producer generates synthetic sales events
-- Spark Structured Streaming consumes from topic
-- Real-time aggregations by country
-- Writes to in-memory table for dashboard queries
+### Phase 3 : Intégration Streaming
+- Producteur Kafka Python génère des événements de ventes synthétiques
+- Spark Structured Streaming consomme depuis le topic
+- Agrégations temps réel par pays
+- Écriture vers table en mémoire pour requêtes dashboard
 
-### Phase 4: Gold Layer (Business Analytics)
-- Computes total revenue KPI
-- Top 3 countries by sales volume
-- RFM customer segmentation (Recency, Frequency, Monetary)
-- VIP classification logic
-- Stores final analytics (`s3a://gold/`)
+### Phase 4 : Couche Gold (Analytique métier)
+- Calcul du KPI de revenu total
+- Top 3 des pays par volume de ventes
+- Segmentation client RFM (Récence, Fréquence, Montant)
+- Logique de classification VIP
+- Stockage des analytiques finales (`s3a://gold/`)
 
-### Phase 5: Visualization Dashboard
-- Matplotlib/Seaborn charts for insights
-- Top 10 countries bar chart
-- Customer segment pie chart
-- Product category performance
-- Real-time streaming comparison
+### Phase 5 : Dashboard de visualisation
+- Graphiques Matplotlib/Seaborn pour insights
+- Diagramme en barres top 10 pays
+- Diagramme circulaire segmentation client
+- Performance par catégorie de produit
+- Comparaison streaming temps réel
 
 ## Configuration
 
-### Spark Session Configuration
+### Configuration de la session Spark
 
 ```python
 spark = SparkSession.builder \
-    .appName("Modern Data Lake Pipeline") \
+    .appName("Pipeline Data Lake Moderne") \
     .config("spark.jars.packages", 
             "org.postgresql:postgresql:42.6.0,"
             "org.apache.hadoop:hadoop-aws:3.4.1,"
@@ -220,55 +220,69 @@ spark = SparkSession.builder \
     .getOrCreate()
 ```
 
-### MinIO Buckets
+### Buckets MinIO
 
-The pipeline automatically uses the following buckets:
-- `bronze/` - Raw ingested data with technical metadata
-- `silver/` - Cleansed and transformed dimensional data
-- `gold/` - Aggregated business metrics and KPIs
+Le pipeline utilise automatiquement les buckets suivants :
+- `bronze/` - Données brutes ingérées avec métadonnées techniques
+- `silver/` - Données dimensionnelles nettoyées et transformées
+- `gold/` - Métriques métier agrégées et KPIs
 
-Create buckets via MinIO Console (http://localhost:9001) or use S3 CLI.
+Créer les buckets via la Console MinIO (http://localhost:9001) ou utiliser S3 CLI.
 
-## Stopping the Environment
+## Arrêt de l'environnement
 
 ```bash
-# Stop services (keeps data)
+# Arrêter les services (conserve les données)
 docker compose down
 
-# Stop and remove all data (CAUTION)
+# Arrêter et supprimer toutes les données (ATTENTION)
 docker compose down -v
 ```
 
-## Learning Outcomes
+## Résultats d'apprentissage
 
-This project demonstrates competency in:
+Ce projet démontre des compétences en :
 
-- Modern data lake architecture patterns
-- Medallion (Bronze/Silver/Gold) data organization
-- Distributed data processing with Apache Spark
-- Real-time streaming with Kafka and Spark Structured Streaming
-- S3-compatible object storage integration
-- ETL/ELT pipeline development
-- Data quality and transformation techniques
-- Business intelligence and analytics
-- Docker containerization for data platforms
-- Python data engineering ecosystem
+- Patterns modernes d'architecture data lake
+- Organisation des données Medallion (Bronze/Silver/Gold)
+- Traitement distribué de données avec Apache Spark
+- Streaming temps réel avec Kafka et Spark Structured Streaming
+- Intégration de stockage objet compatible S3
+- Développement de pipelines ETL/ELT
+- Techniques de qualité et transformation de données
+- Business Intelligence et analytique
+- Conteneurisation de plateformes data avec Docker
+- Écosystème d'ingénierie de données Python
 
-## Contributing
+## Crédits
 
-This project was developed as an academic assignment. Feel free to fork and adapt for your own learning purposes.
+### Infrastructure et matériel pédagogique
+**François SALMON** - Développeur Web / Formateur
+- Conception de l'environnement Docker complet
+- Création des exercices pédagogiques (notebooks/exercices/)
+- Setup de l'infrastructure (Spark, Kafka, MinIO, PostgreSQL)
+- Base de données Northwind et exemples
 
-## Authors
+### Travail réalisé sur ce repository
 
-- Gills Daryl KETCHA
-- Narcisse Cabrel TSAFACK
-- Frédéric FERNANDES DA COSTA
-- Jennifer HOUNGBEDJI
+**Gills Daryl KETCHA** - Coordination du projet et implémentation
+- Réalisation du TP complet (notebook principal)
+- Coordination du groupe de travail
+- Documentation technique (README, ARCHITECTURE)
+- Mise en place du repository GitHub
 
-## License
+**Groupe de travail TP Data Lake - Groupe 3** :
+- Gills Daryl KETCHA (Coordination & Phase Gold)
+- Narcisse Cabrel TSAFACK (Phase Silver - Transformations)
+- Frédéric FERNANDES DA COSTA (Phase Streaming - Kafka)
+- Jennifer HOUNGBEDJI (Phase Bronze - Ingestion)
 
-Educational use only. Not licensed for commercial applications.
+## Licence
 
-## Acknowledgments
+Ce projet est sous licence MIT - voir le fichier [LICENSE](LICENSE) pour plus de détails.
 
-Built with best practices from industry-standard data engineering frameworks and inspired by real-world data lake architectures.
+Usage éducatif et portfolios professionnels encouragés.
+
+## Remerciements
+
+Construit avec les meilleures pratiques issues de frameworks d'ingénierie de données standards de l'industrie et inspiré par des architectures data lake réelles. Merci à François SALMON pour l'environnement pédagogique complet et la qualité des exercices proposés.
